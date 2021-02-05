@@ -1,0 +1,15 @@
+base-url : https://bmi-unikom.000webhostapp.com/
+
+// User
+get-users(GET) : {{ base-url }} api/users
+post-user(POST) : {{ base-url }} api/users-store
+	request : ['nama', 'ttl', 'umur', 'tinggi_badan', 'berat_badan']
+
+// Category
+get-category(GET) : {{ base_url }} api/category
+
+// Check Ideal
+get-check-ideal(GET) : {{ base_url }} api/check_ideal
+bmi-check(POST) : {{ base_url }} api/bmi-check
+	request : ['nama', 'tinggi_badan', 'berat_badan', 'umur', 'gender']
+bmr-check(POST) : {{ base_url }} api/bmr-check
