@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\Transformers\UserTransformer;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Auth;
 
 class AuthController extends Controller
@@ -65,7 +64,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Register akun berhasil',
+            'message' => 'Login akun berhasil',
             'data' => $response
         ], 200);
         // if($user){
