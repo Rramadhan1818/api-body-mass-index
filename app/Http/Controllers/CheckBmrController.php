@@ -29,13 +29,14 @@ class CheckBmController extends Controller
             'tinggi_badan'   => 'required',
             'umur'   => 'required',
             'gender'   => 'required',
+            'type'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
                 'tinggi_badan.required' => 'Tinggi badan harus diisi !',
                 'berat_badan.required' => 'Berat badan harus diisi !',
                 'umur.required' => 'Umur harus diisi !',
-                'gender.required' => 'Gender harus diisi !',
+                'type.required' => 'Type harus diisi !',
             ]
         );
 
@@ -51,38 +52,38 @@ class CheckBmController extends Controller
             $bb = $request->input('berat_badan');
             $tb = $request->input('tinggi_badan') / 100;
 
-            $Bmr = $bb / ($tb*$tb);
-            if($Bmr < 15.5) {
-                $message = "Anda mengalami anoreksia";
-                $kategori = 1;
-            }elseif ($Bmr < 18.5 ) {
-                $message = "Anda mengalami kekurangan gizi";
-                $kategori = 1;
-            }elseif ($Bmr < 25 ) {
-                $message = "Anda memiliki berat badan normal";
-                $kategori = 2;
-            }elseif ($Bmr < 30 ) {
-                $message = "Anda memiliki overweight";
-                $kategori = 3;
-            }elseif ($Bmr < 35 ) {
-                $message = "Anda mengalami Obesitas Level 1";
-                $kategori = 4;
-            }elseif ($Bmr < 40 ) {
-                $message = "Anda mengalami Obesitas Level 2";
-                $kategori = 4;
-            }else {
-                $message = "Anda mengalami Obesitas Akut";
-                $kategori = 4;
-            }
+            // $Bmr = $bb / ($tb*$tb);
+            // if($Bmr < 15.5) {
+            //     $message = "Anda mengalami anoreksia";
+            //     $kategori = 1;
+            // }elseif ($Bmr < 18.5 ) {
+            //     $message = "Anda mengalami kekurangan gizi";
+            //     $kategori = 1;
+            // }elseif ($Bmr < 25 ) {
+            //     $message = "Anda memiliki berat badan normal";
+            //     $kategori = 2;
+            // }elseif ($Bmr < 30 ) {
+            //     $message = "Anda memiliki overweight";
+            //     $kategori = 3;
+            // }elseif ($Bmr < 35 ) {
+            //     $message = "Anda mengalami Obesitas Level 1";
+            //     $kategori = 4;
+            // }elseif ($Bmr < 40 ) {
+            //     $message = "Anda mengalami Obesitas Level 2";
+            //     $kategori = 4;
+            // }else {
+            //     $message = "Anda mengalami Obesitas Akut";
+            //     $kategori = 4;
+            // }
             // dd($Bmr);
-
+            
             $CheckBmr = CheckBmr::create([
                 'nama'     => $request->input('nama'),
                 'tinggi_badan'   => $request->input('tinggi_badan'),
                 'berat_badan'   => $request->input('berat_badan'),
                 'umur'   => $request->input('umur'),
                 'gender'   => $request->input('gender'),
-                'id_kategori'   => $kategori 
+                'type'   => $type 
             ]);
 
 
@@ -96,14 +97,13 @@ class CheckBmController extends Controller
                         'berat_badan'   => $request->berat_badan,
                         'umur'   => $request->umur,
                         'gender'   => $request->gender,
-                        'id_kategori'   => $kategori,
                         'message' => $message 
                     ],
                 ], 200);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'CheckBmr Gagal Disimpan!',
+                    'message' => 'Check BMR Gagal Disimpan!',
                 ], 400);
             }
         }
