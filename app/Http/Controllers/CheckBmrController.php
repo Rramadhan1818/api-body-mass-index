@@ -119,10 +119,44 @@ class CheckBmController extends Controller
                                     );
                     }
                 }
-            }else if($type == ''){
+            }else if($type == 'WHO'){
+                if($umur <= 3){
+                    if($gender == 'L'){
 
-            }else{
+                    }else if($gender == 'P'){
 
+                    }
+                }else if($umur <= 10){
+                    if($gender == 'L'){
+
+                    }else if($gender == 'P'){
+                        
+                    }
+                }else if($umur <= 18){
+                    if($gender == 'L'){
+
+                    }else if($gender == 'P'){
+                        
+                    }
+                }else if($umur <= 30){
+                    if($gender == 'L'){
+
+                    }else if($gender == 'P'){
+                        
+                    }
+                }else if($umur <= 60){
+                    if($gender == 'L'){
+
+                    }else if($gender == 'P'){
+                        
+                    }
+                }else if($umur > 60){
+                    if($gender == 'L'){
+
+                    }else if($gender == 'P'){
+                        
+                    }
+                }
             }
             
             $CheckBmr = CheckBmr::create([
