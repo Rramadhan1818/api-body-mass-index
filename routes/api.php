@@ -22,6 +22,8 @@ Route::post('/users-store', 'UserController@store');
 Route::get('/category', 'CategoryController@index');
 
 //Route Check Ideal
-Route::get('/check-ideal', 'CheckIdealController@index');
-Route::post('/bmi-check', 'CheckIdealController@bmiStore');
-Route::post('/bmr-check', 'CheckIdealController@bmrStore');
+Route::get('/bmi-check', 'CheckBmiController@index');
+Route::get('/bmr-check', 'CheckBmrController@index');
+
+Route::post('/bmi-check', 'CheckBmiController@bmiStore');
+Route::post('/bmr-check', 'CheckBmrController@bmrStore');

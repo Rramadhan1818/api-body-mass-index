@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class CheckBmController extends Controller
+class CheckBmrController extends Controller
 {
     public function index()
     {
@@ -21,7 +21,7 @@ class CheckBmController extends Controller
         ], 200);
     }
 
-    public function BmrStore(Request $request)
+    public function bmrStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama'     => 'required',
@@ -30,13 +30,16 @@ class CheckBmController extends Controller
             'umur'   => 'required',
             'gender'   => 'required',
             'type_bmr'   => 'required',
+            'id_lvl_aktivitas'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
                 'tinggi_badan.required' => 'Tinggi badan harus diisi !',
                 'berat_badan.required' => 'Berat badan harus diisi !',
                 'umur.required' => 'Umur harus diisi !',
-                'type_bmr.required' => 'type_bmr harus diisi !',
+                'gender.required' => 'Gender harus diisi !',
+                'type_bmr.required' => 'Type bmr harus diisi !',
+                'id_lvl_aktivitas.required' => 'Level Aktivitas bmr harus diisi !',
             ]
         );
 
@@ -49,94 +52,91 @@ class CheckBmController extends Controller
 
         } else {
 
-            // Sangat jarang olahraga, kalikan BMR dengan 1,2
-            // Jarang olahraga (1-3 hari/ minggu), kalikan BMR dengan 1,375
-            // Normal olahraga (3-5 hari/ minggu), kalikan BMR dengan 1,55
-            // Sering olahraga (6-7 hari/ minggu), kalikan BMR dengan 1,725
-            // Sangat sering olahraga (setiap hari bisa dua kali dalam sehari), kalikan BMR dengan 1,9
+            //  Sangat jarang olahraga, kalikan BMR dengan 1,2
+            //  Jarang olahraga (1-3 hari/ minggu), kalikan BMR dengan 1,375
+            //  Normal olahraga (3-5 hari/ minggu), kalikan BMR dengan 1,55
+            //  Sering olahraga (6-7 hari/ minggu), kalikan BMR dengan 1,725
+            //  Sangat sering olahraga (setiap hari bisa dua kali dalam sehari), kalikan BMR dengan 1,9
 
             $bb = $request->input('berat_badan');
-            $tb = $request->input('tinggi_badan') / 100;
+            $tb = $request->input('tinggi_badan');
             $gender = $request->input('gender');
             $umur = $request->input('umur');
             $type = $request->input('type_bmr');
+            $lvl_aktivitas = $request->input('id_lvl_aktivitas');
 
             if($type == 'Harris Benedict'){
                 if($gender == 'L'){
-                    $bmr =  66 + (13.7 * $bb) + (5 * $tb) - (6.78 * $umur);
-                    if($bmr <= 1.2){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Sangat jarang olahraga',
-                                    );
-                    }else if($bmr <= 1.375){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Jarang olahraga (1-3 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.55){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Normal olahraga (3-5 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.725){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'Sering olahraga (6-7 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.9){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'Sangat sering olahraga (setiap hari bisa dua kali dalam sehari)',
-                                    );
+                    $bmr =  66 + (13.7 * $bb) + (5 * $tb) - (6.8 * $umur);
+                    // dd($bmr);
+                    if($lvl_aktivitas == 1){
+                        $kal_dibutuhkan = ($bmr * 1.2);
+                    }else if($lvl_aktivitas == 2){
+                        $kal_dibutuhkan = ($bmr * 1.375);
+                    }else if($lvl_aktivitas == 3){
+                        $kal_dibutuhkan = ($bmr * 1.55); 
+                    }else if($bmr == 4){
+                        $kal_dibutuhkan = ($bmr * 1.725); 
+                    }else if($bmr <= 5){
+                        $kal_dibutuhkan = ($bmr * 1.9); 
                     }
                 }else if($gender == 'P'){
                     $bmr = 655 + (9.6 * $bb) + (1.8 * $tb) - (4.7 * $umur);
-                    if($bmr <= 1.2){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Sangat jarang olahraga',
-                                    );
-                    }else if($bmr <= 1.375){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Jarang olahraga (1-3 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.55){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Normal olahraga (3-5 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.725){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Sering olahraga (6-7 hari/ minggu)',
-                                    );
-                    }else if($bmr <= 1.9){
-                        $data_bmr = array(
-                                        'bmr' => $bmr,
-                                        'deskripsi' => 'Sangat sering olahraga (setiap hari bisa dua kali dalam sehari)',
-                                    );
+                    
+                    if($lvl_aktivitas == 1){
+                        $kal_dibutuhkan = ($bmr * 1.2);
+                    }else if($lvl_aktivitas == 2){
+                        $kal_dibutuhkan = ($bmr * 1.375);
+                    }else if($lvl_aktivitas == 3){
+                        $kal_dibutuhkan = ($bmr * 1.55); 
+                    }else if($bmr == 4){
+                        $kal_dibutuhkan = ($bmr * 1.725); 
+                    }else if($bmr <= 5){
+                        $kal_dibutuhkan = ($bmr * 1.9); 
                     }
                 }
             }else if($type == 'WHO'){
                 if($umur <= 3){
                     if($gender == 'L'){
-
+                        $bmr = 60.9 * $bb - 54;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }else if($gender == 'P'){
-
+                        $bmr = 61 * $bb - 51;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }
                 }else if($umur <= 10){
                     if($gender == 'L'){
-
+                        $bmr = 22.7 * $bb - 495;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }else if($gender == 'P'){
-                        
+                        $bmr = 22.5 * $bb - 499;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }
                 }else if($umur <= 18){
                     if($gender == 'L'){
-
+                        $bmr = 17.5 * $bb - 651;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }else if($gender == 'P'){
-                        
+                        $bmr = 12.2 * $bb - 746;
+                        $data_bmr = array(
+                            'bmr' => $bmr,
+                            'deskripsi' => '',
+                        );
                     }
                 }else if($umur <= 30){
                     if($gender == 'L'){
@@ -165,9 +165,11 @@ class CheckBmController extends Controller
                 'berat_badan'   => $request->input('berat_badan'),
                 'umur'   => $request->input('umur'),
                 'gender'   => $request->input('gender'),
-                'type_bmr'   => $request->input('type_bmr')
+                'id_lvl_aktivitas' => $request->input('id_lvl_aktivitas'),
+                'type_bmr'   => $request->input('type_bmr'),
+                'jumlah_bmr'   => $bmr,
+                'kal_dibutuhkan'   => $kal_dibutuhkan,
             ]);
-
 
             if ($CheckBmr) {
                 return response()->json([
@@ -179,7 +181,9 @@ class CheckBmController extends Controller
                         'berat_badan'   => $request->berat_badan,
                         'umur'   => $request->umur,
                         'gender'   => $request->gender,
-                        'data_bmr' => $data_bmr    
+                        'id_lvl_aktivitas'   => $request->id_lvl_aktivitas,
+                        'jumlah_bmr' => $bmr,    
+                        'kal_dibutuhkan' => $kal_dibutuhkan    
                     ],
                 ], 200);
             } else {
