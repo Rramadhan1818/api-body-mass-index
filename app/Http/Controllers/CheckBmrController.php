@@ -13,6 +13,8 @@ class CheckBmrController extends Controller
     public function index()
     {
         $check_bmr = $cetegory = DB::table('check_bmr')
+        ->select('check_bmr.*', 'lvl_aktivitas.lvl_nama', 'lvl_aktivitas.lvl_deskripsi')
+        ->leftJoin('lvl_aktivitas', 'lvl_aktivitas.id_lvl_aktivitas', '=', 'check_bmr.id_lvl_aktivitas')
         ->get();
         return response([
             'success' => true,

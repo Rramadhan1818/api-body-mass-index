@@ -13,6 +13,8 @@ class CheckBmiController extends Controller
     public function index()
     {
         $check_bmi = $cetegory = DB::table('check_bmi')
+        ->select('check_bmi.*', 'category.nama_kategori', 'category.keterangan')
+        ->leftJoin('category', 'category.id_kategori', '=', 'check_bmi.id_kategori')
         ->get();
         return response([
             'success' => true,
