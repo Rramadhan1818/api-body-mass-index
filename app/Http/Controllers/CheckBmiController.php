@@ -45,9 +45,7 @@ class CheckBmiController extends Controller
                 'message' => 'Silahkan Isi Bidang Yang Kosong',
                 'data'    => $validator->errors()
             ],400);
-
         } else {
-
             $bb = $request->input('berat_badan');
             $tb = $request->input('tinggi_badan') / 100;
 
@@ -75,16 +73,16 @@ class CheckBmiController extends Controller
                 $kategori = 4;
             }
             // dd($bmi);
-
+            
             $CheckBmi = CheckBmi::create([
                 'nama'     => $request->input('nama'),
                 'tinggi_badan'   => $request->input('tinggi_badan'),
                 'berat_badan'   => $request->input('berat_badan'),
                 'umur'   => $request->input('umur'),
                 'gender'   => $request->input('gender'),
-                'id_kategori'   => $kategori 
+                'id_kategori'   => $kategori,
+                'jumlah_bmi'   => $bmi 
             ]);
-
 
             if ($CheckBmi) {
                 return response()->json([
@@ -97,6 +95,7 @@ class CheckBmiController extends Controller
                         'umur'   => $request->umur,
                         'gender'   => $request->gender,
                         'id_kategori'   => $kategori,
+                        'jumlah_bmi'   => $bmi,
                         'message' => $message 
                     ],
                 ], 200);
