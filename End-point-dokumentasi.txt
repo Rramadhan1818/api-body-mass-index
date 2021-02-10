@@ -1,15 +1,55 @@
 base-url : https://bmi-unikom.000webhostapp.com/
 
+//Auth
+login(POST) : {{ base-url }} api/login
+request : [
+	    'email', 
+	    'password', 
+	  ]
+register(POST) : {{ base-url }} api/login
+request : [
+	    'name', 
+	    'email',
+	    'password', 
+	  ]
+
 // User
 get-users(GET) : {{ base-url }} api/users
 post-user(POST) : {{ base-url }} api/users-store
-	request : ['nama', 'ttl', 'umur', 'tinggi_badan', 'berat_badan']
+request : [
+	    'nama', 
+	    'ttl', 
+	    'umur', 
+	    'tinggi_badan', 
+            'berat_badan'
+	  ]
 
 // Category
 get-category(GET) : {{ base_url }} api/category
 
-// Check Ideal
-get-check-ideal(GET) : {{ base_url }} api/check_ideal
-bmi-check(POST) : {{ base_url }} api/bmi-check
-	request : ['nama', 'tinggi_badan', 'berat_badan', 'umur', 'gender']
-bmr-check(POST) : {{ base_url }} api/bmr-check
+// Check BMI
+get-bmi-check(GET) : {{ base_url }} api/bmi-check
+post-bmi-check(POST) : {{ base_url }} api/bmi-check
+request : [
+	    'nama', 
+	    'tinggi_badan', 
+	    'berat_badan', 
+	    'umur', 
+	    'gender' => ['L', 'P']
+	  ]
+
+// Check BMR
+get-bmr-check(GET) : {{ base_url }} api/bmr-check
+post-bmr-check(POST) : {{ base_url }} api/bmr-check
+request : [
+	    'nama', 
+	    'tinggi_badan', 
+	    'berat_badan', 
+	    'umur', => ['20'],
+	    'gender' => ['L', 'P'],
+	    'type_bmr' => ['Harris Benedict'],
+	    'id_lvl_aktivitas' => ['1', '2', '3', '4', '5'] //data di ambil di master level aktivitas
+	  ]
+
+// Master Level Aktivitas
+get-lvl-aktivitas(GET) : {{ base_url }} api/lvl-aktivitas

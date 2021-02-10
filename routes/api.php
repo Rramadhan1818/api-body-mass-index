@@ -27,3 +27,7 @@ Route::get('/bmr-check', 'CheckBmrController@index');
 
 Route::post('/bmi-check', 'CheckBmiController@bmiStore');
 Route::post('/bmr-check', 'CheckBmrController@bmrStore');
+
+//Route Master lvl aktivitas
+Route::get('/lvl-aktivitas', 'LvlActivityController@index');
+

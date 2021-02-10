@@ -98,69 +98,6 @@ class CheckBmrController extends Controller
                     }
                 }
             }
-            // else if($type == 'WHO'){
-            //     if($umur <= 3){
-            //         if($gender == 'L'){
-            //             $bmr = 60.9 * $bb - 54;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }else if($gender == 'P'){
-            //             $bmr = 61 * $bb - 51;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }
-            //     }else if($umur <= 10){
-            //         if($gender == 'L'){
-            //             $bmr = 22.7 * $bb - 495;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }else if($gender == 'P'){
-            //             $bmr = 22.5 * $bb - 499;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }
-            //     }else if($umur <= 18){
-            //         if($gender == 'L'){
-            //             $bmr = 17.5 * $bb - 651;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }else if($gender == 'P'){
-            //             $bmr = 12.2 * $bb - 746;
-            //             $data_bmr = array(
-            //                 'bmr' => $bmr,
-            //                 'deskripsi' => '',
-            //             );
-            //         }
-            //     }else if($umur <= 30){
-            //         if($gender == 'L'){
-
-            //         }else if($gender == 'P'){
-                        
-            //         }
-            //     }else if($umur <= 60){
-            //         if($gender == 'L'){
-
-            //         }else if($gender == 'P'){
-                        
-            //         }
-            //     }else if($umur > 60){
-            //         if($gender == 'L'){
-
-            //         }else if($gender == 'P'){
-                        
-            //         }
-            //     }
-            // }
             
             $CheckBmr = CheckBmr::create([
                 'nama'     => $request->input('nama'),
