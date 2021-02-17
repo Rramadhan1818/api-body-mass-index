@@ -45,7 +45,7 @@ class CheckBmiController extends Controller
             'tinggi_badan'   => 'required',
             'umur'   => 'required',
             'gender'   => 'required',
-            'id_user'   => 'required',
+            // 'id_user'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
@@ -53,7 +53,7 @@ class CheckBmiController extends Controller
                 'berat_badan.required' => 'Berat badan harus diisi !',
                 'umur.required' => 'Umur harus diisi !',
                 'gender.required' => 'Gender harus diisi !',
-                'id_user.required' => 'ID User harus diisi !',
+                // 'id_user.required' => 'ID User harus diisi !',
             ]
         );
 

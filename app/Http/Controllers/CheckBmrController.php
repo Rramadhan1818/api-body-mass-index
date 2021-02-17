@@ -47,7 +47,7 @@ class CheckBmrController extends Controller
             'gender'   => 'required',
             'type_bmr'   => 'required',
             'id_lvl_aktivitas'   => 'required',
-            'id_user'   => 'required',
+            // 'id_user'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
@@ -57,7 +57,7 @@ class CheckBmrController extends Controller
                 'gender.required' => 'Gender harus diisi !',
                 'type_bmr.required' => 'Type bmr harus diisi !',
                 'id_lvl_aktivitas.required' => 'Level Aktivitas bmr harus diisi !',
-                'id_user.required' => 'id_user harus diisi !',
+                // 'id_user.required' => 'id_user harus diisi !',
             ]
         );
 
