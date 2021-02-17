@@ -29,6 +29,7 @@ get-category(GET) : {{ base_url }} api/category
 
 // Check BMI
 get-bmi-check(GET) : {{ base_url }} api/bmi-check
+get-bmi-check-by-id(GET) : {{ base_url }} api/bmi-check/{id}
 post-bmi-check(POST) : {{ base_url }} api/bmi-check
 request : [
 	    'nama', 
@@ -36,10 +37,12 @@ request : [
 	    'berat_badan', 
 	    'umur', 
 	    'gender' => ['L', 'P']
+	    'id_user' => { dapat dari login }
 	  ]
 
 // Check BMR
 get-bmr-check(GET) : {{ base_url }} api/bmr-check
+get-bmr-check-by-id(GET) : {{ base_url }} api/bmr-check/{id}
 post-bmr-check(POST) : {{ base_url }} api/bmr-check
 request : [
 	    'nama', 
@@ -49,7 +52,8 @@ request : [
 	    'gender' => ['L', 'P'],
 	    'type_bmr' => ['Harris Benedict'],
 	    'id_lvl_aktivitas' => ['1', '2', '3', '4', '5'] //data di ambil di master level aktivitas
-	  ]
+	    'id_user' => { dapat dari login }  
+	]
 
 // Master Level Aktivitas
 get-lvl-aktivitas(GET) : {{ base_url }} api/lvl-aktivitas
