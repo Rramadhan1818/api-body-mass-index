@@ -12,10 +12,24 @@ class CheckBmiController extends Controller
 {
     public function index()
     {
-        $check_bmi = $cetegory = DB::table('check_bmi')
+        $check_bmi = DB::table('check_bmi')
         ->select('check_bmi.*', 'category.nama_kategori', 'category.keterangan')
         ->leftJoin('category', 'category.id_kategori', '=', 'check_bmi.id_kategori')
         ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Hasil Check',
+            'data' => $check_bmi
+        ], 200);
+    }
+
+    public function getBmiById($id){
+        $check_bmi = DB::table('check_bmi')
+        ->select('check_bmi.*')
+        ->leftJoin('users', 'users.id', '=', 'check_bmi.id_user')
+        ->where('id_user', $id)
+        ->get();
+
         return response([
             'success' => true,
             'message' => 'List Semua Hasil Check',
@@ -31,6 +45,7 @@ class CheckBmiController extends Controller
             'tinggi_badan'   => 'required',
             'umur'   => 'required',
             'gender'   => 'required',
+            'id_user'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
@@ -38,6 +53,7 @@ class CheckBmiController extends Controller
                 'berat_badan.required' => 'Berat badan harus diisi !',
                 'umur.required' => 'Umur harus diisi !',
                 'gender.required' => 'Gender harus diisi !',
+                'id_user.required' => 'ID User harus diisi !',
             ]
         );
 
@@ -83,7 +99,8 @@ class CheckBmiController extends Controller
                 'umur'   => $request->input('umur'),
                 'gender'   => $request->input('gender'),
                 'id_kategori'   => $kategori,
-                'jumlah_bmi'   => $bmi 
+                'jumlah_bmi'   => $bmi, 
+                'id_user'   => $request->input('id_user') 
             ]);
 
             if ($CheckBmi) {
@@ -98,6 +115,7 @@ class CheckBmiController extends Controller
                         'gender'   => $request->gender,
                         'id_kategori'   => $kategori,
                         'jumlah_bmi'   => $bmi,
+                        'id_user'   => $request->id_user,
                         'message' => $message 
                     ],
                 ], 200);

@@ -23,9 +23,11 @@ Route::get('/category', 'CategoryController@index');
 
 //Route Check Ideal
 Route::get('/bmi-check', 'CheckBmiController@index');
-Route::get('/bmr-check', 'CheckBmrController@index');
-
+Route::get('/bmi-check/{id}', 'CheckBmiController@getBmiById');
 Route::post('/bmi-check', 'CheckBmiController@bmiStore');
+
+Route::get('/bmr-check', 'CheckBmrController@index');
+Route::get('/bmr-check/{id}', 'CheckBmrController@getBmrById');
 Route::post('/bmr-check', 'CheckBmrController@bmrStore');
 
 //Route Master lvl aktivitas

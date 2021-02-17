@@ -23,6 +23,20 @@ class CheckBmrController extends Controller
         ], 200);
     }
 
+    public function getBmrById($id){
+        $check_bmi = DB::table('check_bmr')
+        ->select('check_bmr.*')
+        ->leftJoin('users', 'users.id', '=', 'check_bmr.id_user')
+        ->where('id_user', $id)
+        ->get();
+
+        return response([
+            'success' => true,
+            'message' => 'List Semua Hasil Check',
+            'data' => $check_bmi
+        ], 200);
+    }
+
     public function bmrStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -33,6 +47,7 @@ class CheckBmrController extends Controller
             'gender'   => 'required',
             'type_bmr'   => 'required',
             'id_lvl_aktivitas'   => 'required',
+            'id_user'   => 'required',
         ],
             [
                 'nama.required' => 'Nama harus diisi !',
@@ -42,6 +57,7 @@ class CheckBmrController extends Controller
                 'gender.required' => 'Gender harus diisi !',
                 'type_bmr.required' => 'Type bmr harus diisi !',
                 'id_lvl_aktivitas.required' => 'Level Aktivitas bmr harus diisi !',
+                'id_user.required' => 'id_user harus diisi !',
             ]
         );
 
@@ -66,6 +82,7 @@ class CheckBmrController extends Controller
             $umur = $request->input('umur');
             $type = $request->input('type_bmr');
             $lvl_aktivitas = $request->input('id_lvl_aktivitas');
+            $id_user = $request->input('id_user');
 
             if($type == 'Harris Benedict'){
                 if($gender == 'L'){
@@ -109,6 +126,7 @@ class CheckBmrController extends Controller
                 'type_bmr'   => $request->input('type_bmr'),
                 'jumlah_bmr'   => $bmr,
                 'kal_dibutuhkan'   => $kal_dibutuhkan,
+                'id_user'   => $id_user,
             ]);
 
             if ($CheckBmr) {
@@ -123,7 +141,8 @@ class CheckBmrController extends Controller
                         'gender'   => $request->gender,
                         'id_lvl_aktivitas'   => $request->id_lvl_aktivitas,
                         'jumlah_bmr' => $bmr,    
-                        'kal_dibutuhkan' => $kal_dibutuhkan    
+                        'kal_dibutuhkan' => $kal_dibutuhkan,    
+                        'id_user' => $request->id_user    
                     ],
                 ], 200);
             } else {
